@@ -40,6 +40,7 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/api/$, roles: PUBLIC_ACCESS }
+        - { path: ^/api/artistes, roles: PUBLIC_ACCESS, method: ['GET'] }
         - { path: ^/auth, roles: PUBLIC_ACCESS }
         - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }
 when@test:

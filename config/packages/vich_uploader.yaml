@@ -1,0 +1,12 @@
+# config/packages/vich_uploader.yaml or app/config/config.yml
+vich_uploader:
+    db_driver: orm
+
+    metadata:
+        type: attribute
+
+    mappings:
+        artiste:
+            uri_prefix: /images/artiste
+            upload_destination: '%kernel.project_dir%/public/images/artiste'
+            namer: Vich\UploaderBundle\Naming\SmartUniqueNamer
