@@ -2,8 +2,13 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Delete;
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
+use ApiPlatform\Metadata\Put;
+use App\Dto\UserPatchRequestDto;
 use App\Dto\UserPostResquestDto;
 use App\Repository\UserRepository;
 use App\State\InsertUserProcessor;
@@ -19,7 +24,14 @@ use Symfony\Component\Validator\Constraints as Assert;
     input: UserPostResquestDto::class,
     processor: InsertUserProcessor::class,
 )]
+
+#[Patch(
+    processor: InsertUserProcessor::class,
+)]
+
+#[Delete()]
 #[GetCollection()]
+#[Get()]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]

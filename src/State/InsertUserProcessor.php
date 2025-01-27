@@ -20,18 +20,34 @@ class InsertUserProcessor implements ProcessorInterface
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
 
+        if ($uriVariables['id']) {
+            $userId = $uriVariables['id'];
+            $user = $this->em->getRepository(User::class)->find($userId);
+        } else {
+            // Si c'est une création (POST)
+            $user = new User();
+        }
+
         $violations = $this->validator->validate($data); 
         if (count($violations) > 0) {
             throw new \Exception((string) $violations); 
         }
 
-        $user = new User();
-        $user->setEmail($data->getEmail());
-        $user->setFirstName($data->getFirstName());
-        $user->setLastName($data->getLastName());
+        if ($data->getEmail()){
+            $user->setEmail($data->getEmail());
+        }
+        if ($data->getFirstName()){
+            $user->setFirstName($data->getFirstName());
+        }
+        if ($data->getLastName()){
+            $user->setLastName($data->getLastName());
+        }
 
-        $hashedPassword = $this->userPasswordHasherInterface->hashPassword($user, $data->getPassword());
-        $user->setPassword($hashedPassword);
+        if ($data->getPassword()){
+            $hashedPassword = $this->userPasswordHasherInterface->hashPassword($user, $data->getPassword());
+            $user->setPassword($hashedPassword);
+        }
+
 
         $this->em->persist($user);
         $this->em->flush();
