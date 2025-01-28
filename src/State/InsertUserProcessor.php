@@ -20,9 +20,11 @@ class InsertUserProcessor implements ProcessorInterface
     public function process(mixed $data, Operation $operation, array $uriVariables = [], array $context = []): mixed
     {
 
-        if ($uriVariables['id']) {
+        if (isset($uriVariables['id'])) {
             $userId = $uriVariables['id'];
             $user = $this->em->getRepository(User::class)->find($userId);
+
+
         } else {
             // Si c'est une création (POST)
             $user = new User();
