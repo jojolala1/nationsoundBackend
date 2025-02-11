@@ -17,15 +17,21 @@ use App\Repository\ArtisteRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\Serializer\Attribute\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 #[ORM\Entity(repositoryClass: ArtisteRepository::class)]
 #[Get()]
 #[GetCollection()]
-#[Post()]
+#[Post(
+    denormalizationContext:['groups' =>['artiste:create']]
+
+)]
 #[Delete()]
-#[Patch()]
+#[Patch(
+    denormalizationContext:['groups' =>['artiste:modify']]
+)]
 
 #[Vich\Uploadable]
 
@@ -39,27 +45,35 @@ class Artiste
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
+    #[Groups(['artiste:create', 'artiste:modify'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[ApiFilter(DateFilter::class, properties: ['date'])]
+    #[Groups(['artiste:create', 'artiste:modify'])]
     private ?\DateTimeImmutable $date = null;
 
+    #[Groups(['artiste:create', 'artiste:modify'])]
     #[ORM\Column(type: Types::TIME_IMMUTABLE)]
     private ?\DateTimeImmutable $time = null;
 
+    #[Groups(['artiste:create', 'artiste:modify'])]
     #[ORM\Column(length: 255)]
     private ?string $stage = null;
 
+    #[Groups(['artiste:create', 'artiste:modify'])]
     #[ORM\Column(length: 255)]
     private ?string $style = null;
 
+    #[Groups(['artiste:create', 'artiste:modify'])]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[Groups(['artiste:create', 'artiste:modify'])]
     #[ORM\Column(length: 255)]
     private ?string $videoLink = null;
 
+    #[Groups(['artiste:create', 'artiste:modify'])]
     #[Vich\UploadableField(mapping: 'artiste', fileNameProperty: 'imageName')]
     private ?File $imageFile = null;
 
