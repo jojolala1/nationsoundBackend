@@ -164,3 +164,6 @@ Code	Description
 403	Accès refusé (rôle insuffisant)
 404	Ressource non trouvée
 500	Erreur serveur
+📢 Changelog
+v1.0.0 (2024-02-11) : Version initiale de l'API
+v1.1.0 (à venir) : Amélioration des permissions et ajout de statistiques
