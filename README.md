@@ -79,22 +79,23 @@ Authorization: Bearer <your_token>
 
 ## **📋 Table of Access Permissions**
 
-| | | | | |
+|                      |              |           |                   |
 | :------------------: | :----------: | :-------: | :---------------: |
-| **Endpoint** | **Method** | **Access** | **RequiredRole** |
-| `/auth` | POST | Public | None |
-| `/token/refresh` | GET | Public | None |
-| `/api/artists` | GET | Public | None |
-| `/api/artists` | POST | Private | Authenticated (JWT) |
-| `/api/artists/{id}` | GET | Public | None |
-| `/api/artists/{id}` | PATCH/DELETE | Private | Authenticated (JWT) |
-| `/api/places` | GET | Public | None |
-| `/api/places` | POST | Private | Authenticated (JWT) |
-| `/api/sites/{id}` | GET | Public | None |
-| `/api/sites/{id}` | PATCH | Private | Authenticated (JWT) |
-| `/api/users` | GET/POST | Private | Authenticated (JWT) |
+|     **Endpoint**     |  **Method** | **Access** |  **RequiredRole **  |
+|        `/auth`       |     POST     |   Public  |       Aucun       |
+|   `/token/refresh`   |      GET     |   Public  |       Aucun       |
+|    `/api/artistes`   |      GET     |   Public  |       Aucun       |
+|    `/api/artistes`   |     POST     |   Privé   | Authentifié (JWT) |
+| `/api/artistes/{id}` |      GET     |   Public  |       Aucun       |
+| `/api/artistes/{id}` | PATCH/DELETE |   Privé   | Authentifié (JWT) |
+|     `/api/places`    |      GET     |   Public  |       Aucun       |
+|     `/api/places`    |     POST     |   Privé   | Authentifié (JWT) |
+|   `/api/sites/{id}`  |      GET     |   Public  |       Aucun       |
+|   `/api/sites/{id}`  |     PATCH    |   Privé   | Authentifié (JWT) |
+|     `/api/users`     |   GET/POST   |   Privé   | Authentifié (JWT) |
 
 ***
+
 
 ## **🎤 Resource: Artist**
 
