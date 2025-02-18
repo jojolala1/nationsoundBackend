@@ -82,17 +82,17 @@ Authorization: Bearer <your_token>
 |                      |              |           |                   |
 | :------------------: | :----------: | :-------: | :---------------: |
 |     **Endpoint**     |  **Method** | **Access** |  **RequiredRole**  |
-|        `/auth`       |     POST     |   Public  |       Aucun       |
-|   `/token/refresh`   |      GET     |   Public  |       Aucun       |
-|    `/api/artistes`   |      GET     |   Public  |       Aucun       |
-|    `/api/artistes`   |     POST     |   Privé   | Authentifié (JWT) |
-| `/api/artistes/{id}` |      GET     |   Public  |       Aucun       |
-| `/api/artistes/{id}` | PATCH/DELETE |   Privé   | Authentifié (JWT) |
-|     `/api/places`    |      GET     |   Public  |       Aucun       |
-|     `/api/places`    |     POST     |   Privé   | Authentifié (JWT) |
-|   `/api/sites/{id}`  |      GET     |   Public  |       Aucun       |
-|   `/api/sites/{id}`  |     PATCH    |   Privé   | Authentifié (JWT) |
-|     `/api/users`     |   GET/POST   |   Privé   | Authentifié (JWT) |
+|        `/auth`       |     POST     |   Public  |       none       |
+|   `/token/refresh`   |      GET     |   Public  |       none       |
+|    `/api/artistes`   |      GET     |   Public  |       none       |
+|    `/api/artistes`   |     POST     |   Private   | Authenticated (JWT) |
+| `/api/artistes/{id}` |      GET     |   Public  |       none       |
+| `/api/artistes/{id}` | PATCH/DELETE |   Private   | Authenticated (JWT) |
+|     `/api/places`    |      GET     |   Public  |       none       |
+|     `/api/places`    |     POST     |   Private   | Authenticated (JWT) |
+|   `/api/sites/{id}`  |      GET     |   Public  |       none       |
+|   `/api/sites/{id}`  |     PATCH    |   Private   | Authenticated (JWT) |
+|     `/api/users`     |   GET/POST   |   Private   | Authenticated (JWT) |
 
 ***
 
