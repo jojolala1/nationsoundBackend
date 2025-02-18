@@ -81,7 +81,7 @@ Authorization: Bearer <your_token>
 
 |                      |              |           |                   |
 | :------------------: | :----------: | :-------: | :---------------: |
-|     **Endpoint**     |  **Method** | **Access** |  **RequiredRole **  |
+|     **Endpoint**     |  **Method** | **Access** |  **RequiredRole**  |
 |        `/auth`       |     POST     |   Public  |       Aucun       |
 |   `/token/refresh`   |      GET     |   Public  |       Aucun       |
 |    `/api/artistes`   |      GET     |   Public  |       Aucun       |
