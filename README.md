@@ -1,254 +1,254 @@
 ***
 
 
-# **📚 Documentation de l'API du Festival**
+# **📚 API Documentation for the Festival**
 
 ## **🎯 Introduction**
 
-Cette API privée permet de gérer les artistes, les lieux, les utilisateurs, et les sites liés au festival.\
-Certains endpoints sont publics, tandis que d’autres nécessitent une authentification via un token JWT.
+This private API allows managing artists, venues, users, and sites related to the festival.\
+Some endpoints are public, while others require authentication via a JWT token.
 
-- **Base URL (Prod)** :[ https://api.festival.com](https://api.festival.com)
+- **Base URL (Prod)**: [https://api.festival.com](https://api.festival.com)
 
-- **Base URL (Local)** :[ http://localhost:8000](http://localhost:8000)
+- **Base URL (Local)**: [http://localhost:8000](http://localhost:8000)
 
-- **Format des données** : application/json
+- **Data Format**: application/json
 
-- **Authentification** : JWT (avec rafraîchissement de token)
+- **Authentication**: JWT (with token refresh)
 
 ***
 
 
-## **🔐 Authentification & Gestion des Tokens**
+## **🔐 Authentication & Token Management**
 
-### **1️⃣ Connexion (Login)**
+### **1️⃣ Login**
 
-- **URL** : POST `/auth`
+- **URL**: POST `/auth`
 
-- **Accès** : Public ✅
+- **Access**: Public ✅
 
-- **Description** : Authentifie un utilisateur et retourne un token d’accès (JWT) + un refresh token.
-
-
-#### **📥 Requête :**
-
-json
-
-CopyEdit
-
-    { "email": "admin@festival.com", "password": "Password123!" }
+- **Description**: Authenticates a user and returns an access token (JWT) + a refresh token.
 
 
-#### **📤 Réponse :**
+#### **📥 Request:**
 
 json
 
-CopyEdit
-
-    { "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", "refresh_token": "741f6a52f4589c8ccd0851f005e05093..." }
-
-
-### **2️⃣ Rafraîchir le Token d’Accès**
-
-- **URL** : GET `/token/refresh`
-
-- **Accès** : Public ✅
-
-- **Description** : Permet d’obtenir un nouveau token d’accès grâce au refresh token.
+```json
+{ "email": "admin@festival.com", "password": "Password123!" }
+```
 
 
-#### **📥 Requête :**
+#### **📤 Response:**
 
 json
 
-CopyEdit
+```json
+{ "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", "refresh_token": "741f6a52f4589c8ccd0851f005e05093..." }
+```
 
-    { "refresh_token": "741f6a52f4589c8ccd0851f005e05093218ecdc3b7edd6e0338d0f223b6b0090..." }
+
+### **2️⃣ Refresh Access Token**
+
+- **URL**: GET `/token/refresh`
+
+- **Access**: Public ✅
+
+- **Description**: Allows obtaining a new access token using the refresh token.
 
 
-#### **📤 Réponse :**
+#### **📥 Request:**
 
 json
 
-CopyEdit
+```json
+{ "refresh_token": "741f6a52f4589c8ccd0851f005e05093218ecdc3b7edd6e0338d0f223b6b0090..." }
+```
 
-    { "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }
+
+#### **📤 Response:**
+
+json
+
+```json
+{ "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." }
+```
 
 
-#### **🚀 Exemple d’utilisation :**
+#### **🚀 Example Usage:**
 
 text
 
-CopyEdit
-
-    Authorization: Bearer <votre_token>
+```text
+Authorization: Bearer <your_token>
+```
 
 ***
 
 
-## **📋 Tableau des Permissions d'Accès**
+## **📋 Access Permissions Table**
 
 |                      |              |           |                   |
 | :------------------: | :----------: | :-------: | :---------------: |
-|     **Endpoint**     |  **Méthode** | **Accès** |  **Rôle Requis**  |
-|        `/auth`       |     POST     |   Public  |       Aucun       |
-|   `/token/refresh`   |      GET     |   Public  |       Aucun       |
-|    `/api/artistes`   |      GET     |   Public  |       Aucun       |
-|    `/api/artistes`   |     POST     |   Privé   | Authentifié (JWT) |
-| `/api/artistes/{id}` |      GET     |   Public  |       Aucun       |
-| `/api/artistes/{id}` | PATCH/DELETE |   Privé   | Authentifié (JWT) |
-|     `/api/places`    |      GET     |   Public  |       Aucun       |
-|     `/api/places`    |     POST     |   Privé   | Authentifié (JWT) |
-|   `/api/sites/{id}`  |      GET     |   Public  |       Aucun       |
-|   `/api/sites/{id}`  |     PATCH    |   Privé   | Authentifié (JWT) |
-|     `/api/users`     |   GET/POST   |   Privé   | Authentifié (JWT) |
+|     **Endpoint**     |  **Method**  | **Access**|  **Required Role**|
+|        `/auth`       |     POST     |   Public  |       None        |
+|   `/token/refresh`   |      GET     |   Public  |       None        |
+|    `/api/artists`    |      GET     |   Public  |       None        |
+|    `/api/artists`    |     POST     |   Private | Authenticated (JWT)|
+| `/api/artists/{id}`  |      GET     |   Public  |       None        |
+| `/api/artists/{id}`  | PATCH/DELETE |   Private | Authenticated (JWT)|
+|     `/api/places`    |      GET     |   Public  |       None        |
+|     `/api/places`    |     POST     |   Private | Authenticated (JWT)|
+|   `/api/sites/{id}`  |      GET     |   Public  |       None        |
+|   `/api/sites/{id}`  |     PATCH    |   Private | Authenticated (JWT)|
+|     `/api/users`     |   GET/POST   |   Private | Authenticated (JWT)|
 
 ***
 
 
-## **🎤 Ressource : Artiste**
+## **🎤 Resource: Artist**
 
-### **📥 GET** `/api/artistes`
+### **📥 GET** `/api/artists`
 
-- **Accès** : Public ✅
+- **Access**: Public ✅
 
-- **Description** : Récupère la liste des artistes.
-
-
-#### **📤 Exemple de Réponse :**
-
-json
-
-CopyEdit
-
-    [
-      { "id": 1, "name": "DJ Sonic", "date": "2024-08-15T20:00:00Z", "time": "20:00", "stage": "Main Stage", "style": "Electro", "description": "Un DJ énergique", "videoLink": "https://youtube.com/xyz", "imageName": "dj_sonic.jpg" }
-    ]
+- **Description**: Retrieves the list of artists.
 
 
-### **➕ POST** `/api/artistes`
-
-- **Accès** : Privé 🔒 (JWT requis)
-
-- **Description** : Crée un nouvel artiste.
-
-
-#### **📥 Requête :**
+#### **📤 Example Response:**
 
 json
 
-CopyEdit
-
-    { "name": "The Rockers", "date": "2024-08-16T18:00:00Z", "time": "18:00", "stage": "Stage B", "style": "Rock", "description": "Groupe de rock alternatif", "videoLink": "https://youtube.com/therockers" }
-
-
-### **🔍 GET** `/api/artistes/{id}`
-
-- **Accès** : Public ✅
-
-- **Description** : Récupère les détails d’un artiste spécifique.
+```json
+[
+    { "id": 1, "name": "DJ Sonic", "date": "2024-08-15T20:00:00Z", "time": "20:00", "stage": "Main Stage", "style": "Electro", "description": "An energetic DJ", "videoLink": "https://youtube.com/xyz", "imageName": "dj_sonic.jpg" }
+]
+```
 
 
-### **✏️ PATCH** `/api/artistes/{id}`
+### **➕ POST** `/api/artists`
 
-- **Accès** : Privé 🔒 (JWT requis)
+- **Access**: Private 🔒 (JWT required)
 
-- **Description** : Met à jour les informations d’un artiste.
+- **Description**: Creates a new artist.
 
 
-### **🗑️ DELETE** `/api/artistes/{id}`
+#### **📥 Request:**
 
-- **Accès** : Privé 🔒 (JWT requis)
+json
 
-- **Description** : Supprime un artiste.
+```json
+{ "name": "The Rockers", "date": "2024-08-16T18:00:00Z", "time": "18:00", "stage": "Stage B", "style": "Rock", "description": "Alternative rock band", "videoLink": "https://youtube.com/therockers" }
+```
+
+
+### **🔍 GET** `/api/artists/{id}`
+
+- **Access**: Public ✅
+
+- **Description**: Retrieves details of a specific artist.
+
+
+### **✏️ PATCH** `/api/artists/{id}`
+
+- **Access**: Private 🔒 (JWT required)
+
+- **Description**: Updates artist information.
+
+
+### **🗑️ DELETE** `/api/artists/{id}`
+
+- **Access**: Private 🔒 (JWT required)
+
+- **Description**: Deletes an artist.
 
 ***
 
 
-## **📍 Ressource : Place**
+## **📍 Resource: Place**
 
 ### **📥 GET** `/api/places`
 
-- **Accès** : Public ✅
+- **Access**: Public ✅
 
-- **Description** : Liste des lieux du festival.
+- **Description**: List of festival venues.
 
 
-#### **📤 Exemple de Réponse :**
+#### **📤 Example Response:**
 
 json
 
-CopyEdit
-
-    [ { "id": 1, "name": "Main Stage", "latitude": 48.8566, "longitude": 2.3522, "iconClass": "stage-icon", "category": "Concert", "opening": "2024-08-15T10:00:00Z", "closing": "2024-08-15T23:00:00Z", "description": "Scène principale" } ]
+```json
+[ { "id": 1, "name": "Main Stage", "latitude": 48.8566, "longitude": 2.3522, "iconClass": "stage-icon", "category": "Concert", "opening": "2024-08-15T10:00:00Z", "closing": "2024-08-15T23:00:00Z", "description": "Main stage" } ]
+```
 
 
 ### **➕ POST** `/api/places`
 
-- **Accès** : Privé 🔒 (JWT requis)
+- **Access**: Private 🔒 (JWT required)
 
-- **Description** : Crée un lieu.
+- **Description**: Creates a venue.
 
 ***
 
 
-## **🌐 Ressource : Site**
+## **🌐 Resource: Site**
 
 ### **🔍 GET** `/api/sites/{id}`
 
-- **Accès** : Public ✅
+- **Access**: Public ✅
 
-- **Description** : Détails d’un site.
+- **Description**: Details of a site.
 
 
 ### **✏️ PATCH** `/api/sites/{id}`
 
-- **Accès** : Privé 🔒 (JWT requis)
+- **Access**: Private 🔒 (JWT required)
 
-- **Description** : Mise à jour des informations d’un site.
+- **Description**: Updates site information.
 
 ***
 
 
-## **👥 Ressource : User**
+## **👥 Resource: User**
 
 ### **📥 GET** `/api/users`
 
-- **Accès** : Privé 🔒 (JWT requis)
+- **Access**: Private 🔒 (JWT required)
 
-- **Description** : Liste des utilisateurs.
+- **Description**: List of users.
 
 
 ### **➕ POST** `/api/users`
 
-- **Accès** : Privé 🔒 (JWT requis)
+- **Access**: Private 🔒 (JWT required)
 
-- **Description** : Crée un nouvel utilisateur.
+- **Description**: Creates a new user.
 
 ***
 
 
-## **⚠️ Gestion des Erreurs**
+## **⚠️ Error Handling**
 
-Toutes les erreurs sont renvoyées au format JSON :
+All errors are returned in JSON format:
 
 
-#### **Exemple de Réponse d'Erreur :**
+#### **Example Error Response:**
 
 json
 
-CopyEdit
+```json
+{ "code": 401, "message": "Unauthorized access" }
+```
 
-    { "code": 401, "message": "Accès non autorisé" }
 
-
-### **Codes d'erreur :**
+### **Error Codes:**
 
 |          |                                 |
 | :------: | :-----------------------------: |
 | **Code** |         **Description**         |
-|    400   |         Mauvaise requête        |
-|    401   |  Non autorisé (token manquant)  |
-|    403   | Accès refusé (rôle insuffisant) |
-|    404   |      Ressource non trouvée      |
-|    500   |          Erreur serveur         |
+|    400   |         Bad Request             |
+|    401   |  Unauthorized (missing token)   |
+|    403   | Forbidden (insufficient role)   |
+|    404   |      Resource Not Found         |
+|    500   |          Server Error           |
