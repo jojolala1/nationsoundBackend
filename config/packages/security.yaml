@@ -19,7 +19,7 @@ security:
             stateless: true
             provider: app_user_provider
             json_login:
-                check_path: /auth # The name in routes.yaml is enough for mapping
+                check_path: /api/auth # The name in routes.yaml is enough for mapping
                 username_path: email
                 password_path: password
                 success_handler: lexik_jwt_authentication.handler.authentication_success
@@ -43,7 +43,9 @@ security:
         - { path: ^/api/artistes, roles: PUBLIC_ACCESS, method: ['GET'] }
         - { path: ^/api/places, roles: PUBLIC_ACCESS, method: ['GET'] }
         - { path: ^/api/sites, roles: PUBLIC_ACCESS, method: ['GET'] }
-        - { path: ^/auth, roles: PUBLIC_ACCESS }
+        - { path: ^/api/users, roles: PUBLIC_ACCESS, method: ['POST'] }
+
+        - { path: ^/api/auth, roles: PUBLIC_ACCESS }
         - { path: ^/api/, roles: IS_AUTHENTICATED_FULLY }
         
 when@test:

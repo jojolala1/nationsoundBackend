@@ -10,9 +10,6 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
-use App\Controller\ArtisteController;
-use App\Controller\ArtistesController;
-use App\Controller\TestController;
 use App\Repository\ArtisteRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,23 +17,18 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Attribute\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-
 #[ORM\Entity(repositoryClass: ArtisteRepository::class)]
 #[Get()]
 #[GetCollection()]
 #[Post(
-    denormalizationContext:['groups' =>['artiste:create']]
-
+    denormalizationContext: ['groups' => ['artiste:create']]
 )]
 #[Delete()]
 #[Patch(
-    denormalizationContext:['groups' =>['artiste:modify']]
+    denormalizationContext: ['groups' => ['artiste:modify']]
 )]
-
 #[Vich\Uploadable]
-
 #[ApiFilter(SearchFilter::class, properties: ['name' => 'exact'])]
-
 class Artiste
 {
     #[ORM\Id]
@@ -45,36 +37,32 @@ class Artiste
     private ?int $id = null;
 
     #[ORM\Column(length: 255, unique: true)]
-    #[Groups(['artiste:create', 'artiste:modify'])]
+    #[Groups(['artiste:create', 'artiste:modify', 'artiste:read'])]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     #[ApiFilter(DateFilter::class, properties: ['date'])]
-    #[Groups(['artiste:create', 'artiste:modify'])]
+    #[Groups(['artiste:create', 'artiste:modify', 'artiste:read'])]
     private ?\DateTimeImmutable $date = null;
 
-    #[Groups(['artiste:create', 'artiste:modify'])]
     #[ORM\Column(type: Types::TIME_IMMUTABLE)]
+    #[Groups(['artiste:create', 'artiste:modify', 'artiste:read'])]
     private ?\DateTimeImmutable $time = null;
 
-    #[Groups(['artiste:create', 'artiste:modify'])]
     #[ORM\Column(length: 255)]
-    private ?string $stage = null;
-
-    #[Groups(['artiste:create', 'artiste:modify'])]
-    #[ORM\Column(length: 255)]
+    #[Groups(['artiste:create', 'artiste:modify', 'artiste:read'])]
     private ?string $style = null;
 
-    #[Groups(['artiste:create', 'artiste:modify'])]
     #[ORM\Column(type: Types::TEXT)]
+    #[Groups(['artiste:create', 'artiste:modify', 'artiste:read'])]
     private ?string $description = null;
 
-    #[Groups(['artiste:create', 'artiste:modify'])]
     #[ORM\Column(length: 255)]
+    #[Groups(['artiste:create', 'artiste:modify', 'artiste:read'])]
     private ?string $videoLink = null;
 
-    #[Groups(['artiste:create', 'artiste:modify'])]
     #[Vich\UploadableField(mapping: 'artiste', fileNameProperty: 'imageName')]
+    #[Groups(['artiste:create', 'artiste:modify'])]
     private ?File $imageFile = null;
 
     #[ORM\Column(nullable: true)]
@@ -82,6 +70,11 @@ class Artiste
 
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
+
+    #[ORM\ManyToOne(targetEntity: Place::class, inversedBy: 'artistes_id')]
+    #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['artiste:read', 'artiste:create', 'artiste:modify'])]
+    private ?Place $place_id = null;
 
     public function getId(): ?int
     {
@@ -96,7 +89,6 @@ class Artiste
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -108,7 +100,6 @@ class Artiste
     public function setDate(\DateTimeImmutable $date): static
     {
         $this->date = $date;
-
         return $this;
     }
 
@@ -120,19 +111,6 @@ class Artiste
     public function setTime(\DateTimeImmutable $time): static
     {
         $this->time = $time;
-
-        return $this;
-    }
-
-    public function getStage(): ?string
-    {
-        return $this->stage;
-    }
-
-    public function setStage(string $stage): static
-    {
-        $this->stage = $stage;
-
         return $this;
     }
 
@@ -144,7 +122,6 @@ class Artiste
     public function setStyle(string $style): static
     {
         $this->style = $style;
-
         return $this;
     }
 
@@ -156,7 +133,6 @@ class Artiste
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
         return $this;
     }
 
@@ -168,17 +144,13 @@ class Artiste
     public function setVideoLink(string $videoLink): static
     {
         $this->videoLink = $videoLink;
-
         return $this;
     }
 
     public function setImageFile(?File $imageFile = null): void
     {
         $this->imageFile = $imageFile;
-
         if (null !== $imageFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
             $this->updatedAt = new \DateTimeImmutable();
         }
     }
@@ -196,5 +168,23 @@ class Artiste
     public function getImageName(): ?string
     {
         return $this->imageName;
+    }
+
+    public function getPlaceId(): ?Place
+    {
+        return $this->place_id;
+    }
+
+    public function setPlaceId(?Place $place_id): static
+    {
+        $this->place_id = $place_id;
+        return $this;
+    }
+
+    // Ajout du getter dynamique pour le stage
+    #[Groups(['artiste:read'])]
+    public function getStage(): ?string
+    {
+        return $this->place_id?->getName();
     }
 }

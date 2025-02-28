@@ -29,7 +29,9 @@ use Symfony\Component\Validator\Constraints as Assert;
     processor: InsertUserProcessor::class,
 )]
 
-#[Delete()]
+#[Delete(
+    security: "is_granted('DELETE', object)"
+)]
 #[GetCollection()]
 #[Get()]
 class User implements UserInterface, PasswordAuthenticatedUserInterface

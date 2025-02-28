@@ -4,8 +4,11 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\PlaceRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Attribute\Groups;
 
 #[ORM\Entity(repositoryClass: PlaceRepository::class)]
 #[ApiResource]
@@ -17,6 +20,7 @@ class Place
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['artiste:read'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 255)]
@@ -39,6 +43,17 @@ class Place
 
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
+
+    /**
+     * @var Collection<int, Artiste>
+     */
+    #[ORM\OneToMany(targetEntity: Artiste::class, mappedBy: 'place_id')]
+    private Collection $artistes_id;
+
+    public function __construct()
+    {
+        $this->artistes_id = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -137,6 +152,36 @@ class Place
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Artiste>
+     */
+    public function getArtistesId(): Collection
+    {
+        return $this->artistes_id;
+    }
+
+    public function addArtistesId(Artiste $artistesId): static
+    {
+        if (!$this->artistes_id->contains($artistesId)) {
+            $this->artistes_id->add($artistesId);
+            $artistesId->setPlaceId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeArtistesId(Artiste $artistesId): static
+    {
+        if ($this->artistes_id->removeElement($artistesId)) {
+            // set the owning side to null (unless already changed)
+            if ($artistesId->getPlaceId() === $this) {
+                $artistesId->setPlaceId(null);
+            }
+        }
 
         return $this;
     }

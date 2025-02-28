@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Place;
 use App\Repository\ArtisteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,8 +45,15 @@ final class ModifyArtsiteController extends AbstractController{
         if (isset($data['time'])) {
             $artiste->setTime(new \DateTimeImmutable($data['time']));
         }
-        if (isset($data['stage'])) {
-            $artiste->setStage($data['stage']);
+        if (isset($data['place_id'])) {
+            $place = $em->getRepository(Place::class)->find($data['place_id']);
+        
+            if (!$place) {
+                return new JsonResponse(['error' => 'Scène non trouvée'], JsonResponse::HTTP_NOT_FOUND);
+            }
+        
+            // Assigner l'objet Place à l'artiste
+            $artiste->setPlaceId($place);
         }
         if (isset($data['style'])) {
             $artiste->setStyle($data['style']);
