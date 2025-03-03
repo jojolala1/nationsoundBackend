@@ -24,7 +24,7 @@ Some endpoints are public, while others require authentication via a JWT token.
 - **Framework Backend**: [Symfony]
 - **Database**: [Mariadb]
 - **Deployment**: [Hostinger vps]
-- **Styling**: [Bootstrap CSS and scc custom]
+- **Styling**: [Bootstrap CSS and css custom]
 
 ## **🚀 Running Locally**
 
