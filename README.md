@@ -8,7 +8,7 @@
 This private API allows managing artists, venues, users, and sites related to the festival.\
 Some endpoints are public, while others require authentication via a JWT token.
 
-- **Base URL (Prod)**: [https://api.festival.com](https://api.festival.com)
+- **Base URL (Prod)**: [https://nationsound.space/api](https://nationsound.space/api)
 
 - **Base URL (Local)**: [http://localhost:8000](http://localhost:8000)
 
@@ -20,11 +20,11 @@ Some endpoints are public, while others require authentication via a JWT token.
 
 ## **🌐 Technologies**
 
-- **Frontend**: [React.js](github: https://github.com/jojolala1/NationSound.git)
-- **Framework Backend**: [Symfony]
-- **Database**: [Mariadb]
-- **Deployment**: [Hostinger vps]
-- **Styling**: [Bootstrap CSS and css custom]
+- **Frontend**: React.js[github:]( https://github.com/jojolala1/NationSound.git)
+- **Framework Backend**: Symfony
+- **Database**: Mariadb
+- **Deployment**: Hostinger vps
+- **Styling**: Bootstrap CSS and css custom
 
 ## **🚀 Running Locally**
 
