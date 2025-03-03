@@ -38,7 +38,7 @@ symfony server:start
 
 ### **1️⃣ Login**
 
-- **URL**: POST `/auth`
+- **URL**: POST `/api/auth`
 
 - **Access**: Public ✅
 
