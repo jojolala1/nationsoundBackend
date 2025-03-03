@@ -20,7 +20,7 @@ Some endpoints are public, while others require authentication via a JWT token.
 
 ## **🌐 Technologies**
 
-- **Frontend**: React.js[github:]( https://github.com/jojolala1/NationSound.git)
+- **Frontend**: React.js [github]( https://github.com/jojolala1/NationSound.git)
 - **Framework Backend**: Symfony
 - **Database**: Mariadb
 - **Deployment**: Hostinger vps
