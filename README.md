@@ -18,7 +18,7 @@ Some endpoints are public, while others require authentication via a JWT token.
 
 ***
 
-## **🎯 Running Locally**
+## **🚀 Running Locally**
 
 ```bash
 git clone https://github.com/jojolala1/nationsoundBackend.git
